@@ -1,7 +1,8 @@
 {
   "name": "phoneApp",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "capacitor": {}
   },
   "type": "angular"
 }

@@ -7,4 +7,20 @@
     <br>
     <input type="button" value="Submit" (click)="ngOnClick()">
   </form>
+
+  <div id="connectButtonContainer">
+    <button id="connectButton" (click)="ngConnectClick()" style='width: 100px; height: 100px;'>Connect to HC-02</button>
+  </div>
+
+  <div id="debugContainer">
+    <p>
+      {{debugText}}
+    </p>
+  </div>
+
+  <div id="dataReadContainer">
+    <p>
+      {{dataText}}
+    </p>
+  </div>
 </div>
