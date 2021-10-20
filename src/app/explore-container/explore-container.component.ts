@@ -11,6 +11,7 @@ export class ExploreContainerComponent implements OnInit {
   //Bluetooth module address: 00:0C:BF:19:A2:59
 
   @Input() name: string;
+  @Input() tab: string = 'tab1';
   height: number = 180.0;
   debugText: string = '';
   dataText: string = '';
@@ -20,10 +21,11 @@ export class ExploreContainerComponent implements OnInit {
   }
 
   ngOnInit() {
-    setInterval(this.onDataRead, 1);
+
   }
 
   ngOnClick() {
+    //send the calculated data (height/2) to the shoes
     let calculatedDistance = this.height/2;
 
     this.bluetoothSerial.isConnected().then(res => {
@@ -37,7 +39,6 @@ export class ExploreContainerComponent implements OnInit {
 
   ngConnectClick(){
     //initialize bluetooth connection...
-
     this.bluetoothSerial.isConnected().then(res => {
       this.bluetoothSerial.disconnect().then(res => {
         this.debugText = 'DISCONNETED';
@@ -63,28 +64,6 @@ export class ExploreContainerComponent implements OnInit {
       this.dataText = 'Data sent successfully!';
     }, rej => {
       this.dataText = 'Data could not be sent...';
-    });
-  }
-
-  private onDataRead() {
-    //handle the data from the module
-    this.dataText = 'called :)';
-    this.bluetoothSerial.available().then(res => {
-      this.bluetoothSerial.isConnected().then(
-        res => {
-          this.bluetoothSerial.read().then(res => {
-            this.dataText = 'read';
-            this.dataText = res;
-          },
-          rej => {
-            this.dataText = 'not read :(';
-          });
-        },
-        rej => {
-          this.dataText = 'Not connected!';
-        });
-    }, rej => {
-      this.dataText = "Unavailable!"
     });
   }
 }
