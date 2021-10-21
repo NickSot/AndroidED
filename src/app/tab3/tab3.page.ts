@@ -12,12 +12,15 @@ export class Tab3Page implements OnInit{
   debugText: string = '';
   private queue: Array<string> = [];
   //front: 2, back: 1, side: 3
-  constructor(private bluetoothSerial: BluetoothSerial) {
+  constructor(private bluetoothSerial: BluetoothSerial, private nativeAudio: NativeAudio) {
 
   }
 
   ngOnInit() {
     let int = interval(100).subscribe((d) => {
+      this.nativeAudio.preloadComplex('left', 'assets/audio/Left.m4a', 1, 1, 0).then(res => {
+        this.debugText = res;
+      }, rej => {this.debugText = rej});
       //
       this.bluetoothSerial.available().then(res => {
             this.bluetoothSerial.isConnected().then(
@@ -61,14 +64,14 @@ export class Tab3Page implements OnInit{
                   }
                 },
                 rej => {
-                  this.debugText = 'Read failure...';
+                  // this.debugText = 'Read failure...';
                 });
               },
               rej => {
-                this.debugText = 'Device is not connected!';
+                // this.debugText = 'Device is not connected!';
               });
             }, rej => {
-              this.debugText = 'Bluetooth is not available!';
+              // this.debugText = 'Bluetooth is not available!';
           });
     });
   }
