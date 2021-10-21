@@ -1,5 +1,8 @@
 #container {
   text-align: center;
+  color: white;
+  background-color: black;
+  height: 100%;
 
   position: absolute;
   left: 0;
@@ -24,4 +27,26 @@
 
 #container a {
   text-decoration: none;
+}
+
+#title {
+  position: relative;
+  top: 48%;
+}
+#heightInputFormContainer {
+  color: white;
+  position: relative;
+  top: 50%;
+}
+
+#connectButtonContainer {
+  position: relative;
+  top: 50%;
+}
+
+#connectButton {
+  border-radius: 10px;
+  border-color: red;
+  width: 100px;
+  height: 100px;
 }

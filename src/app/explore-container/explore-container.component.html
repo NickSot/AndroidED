@@ -1,19 +1,16 @@
 <div id="container">
-  <strong>{{ name }}</strong>
-  <!-- <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p> -->
-  <div *ngIf="tab === 'tab2'">
+  <strong id="title">{{ name }}</strong>
+  <div *ngIf="tab === 'tab2'" id="heightInputFormContainer">
     <form action="#" id="heightInputForm">
-      Height: <input type="text" id="userHeight" name="height" [(ngModel)]='height'>
+      <input type="text" id="userHeight" name="height" [(ngModel)]='height' style="border-radius: 8px; border-color: red;">
       <br>
       <br>
-      <input type="button" value="Submit" (click)="ngOnClick()">
+      <input type="button" value="Submit" (click)="ngOnClick()" style="color: black; border-radius: 10px; border-color: red; width: 100px; height:50px;">
     </form>
   </div>
 
-  <div *ngIf="tab==='tab1'">
-    <div id="connectButtonContainer">
-      <button id="connectButton" (click)="ngConnectClick()" style='width: 100px; height: 100px;'>Connect to HC-02</button>
-    </div>
+  <div *ngIf="tab==='tab1'" id = "connectButtonContainer">
+    <button id="connectButton" (click)="ngConnectClick()">Connect to HC-02</button>
   </div>
 
   <div id="debugContainer">
