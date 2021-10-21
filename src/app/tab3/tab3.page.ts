@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
 import { NativeAudio } from '@ionic-native/native-audio/ngx';
 import { interval } from 'rxjs';
@@ -17,11 +18,24 @@ export class Tab3Page implements OnInit{
   }
 
   ngOnInit() {
+    this.nativeAudio.preloadComplex('left', 'assets/audio/Left.m4a', 1, 1, 0).then(() => {
+      this.nativeAudio.preloadComplex('right', 'assets/audio/Right.m4a', 1, 1, 0).then(() => {
+        this.nativeAudio.preloadComplex('forward', 'assets/audio/Forward.m4a', 1, 1, 0).then(() => {
+          this.nativeAudio.preloadComplex('backwards', 'assets/audio/Backwards.m4a', 1, 1, 0).then(() => {
+            this.debugText = "all files preloaded...";
+          });
+        });
+      });
+    });
+
+    let audioPlaying = false;
+
     let int = interval(100).subscribe((d) => {
-      this.nativeAudio.preloadComplex('left', 'assets/audio/Left.m4a', 1, 1, 0).then(res => {
-        this.debugText = res;
-      }, rej => {this.debugText = rej});
-      //
+      // if (!audioPlaying){
+      //   audioPlaying = true;
+      //   this.nativeAudio.play('forward', () => {audioPlaying = false;});
+      // }
+
       this.bluetoothSerial.available().then(res => {
             this.bluetoothSerial.isConnected().then(
               res => {
@@ -33,7 +47,6 @@ export class Tab3Page implements OnInit{
                       }
                     }
                   }
-
                   if (d % 4 == 0){
                     // int.unsubscribe();
                     //this call retrieves the element of that data that occurs the most.
@@ -41,26 +54,51 @@ export class Tab3Page implements OnInit{
                     this.queue = [];
                     this.debugText = winner;
 
-                    // switch (winner){
-                    //   case 'S1':
-                    //     this.nativeAudio.play('../../assets/audio/Backwards.m4a');
-                    //     break;
-                    //   case 'R1':
-                    //     this.nativeAudio.play('../../assets/audio/Backwards.m4a');
-                    //     break;
-                    //   case 'S2':
-                    //     this.nativeAudio.play('../../assets/audio/Right.m4a');
-                    //     break;
-                    //   case 'R2':
-                    //     this.nativeAudio.play('../../assets/audio/Left.m4a');
-                    //     break;
-                    //   case 'S3':
-                    //     this.nativeAudio.play('../../assets/audio/Forward.m4a');
-                    //     break;
-                    //   case 'R3':
-                    //     this.nativeAudio.play('../../assets/audio/Forward.m4a');
-                    //     break;
-                    // }
+                    //play the audio file according to which is the most occurring value in the queue
+                    switch (winner){
+                      case 'S1':
+                        if (!audioPlaying){
+                          audioPlaying = true;
+                          this.nativeAudio.play('forward', () => {audioPlaying = false;});
+                        }
+
+                        break;
+                      case 'R1':
+                        if (!audioPlaying){
+                          audioPlaying = true;
+                          this.nativeAudio.play('forward', () => {audioPlaying = false;});
+                        }
+
+                        break;
+                      case 'S2':
+                        if (!audioPlaying){
+                          audioPlaying = true;
+                          this.nativeAudio.play('backwards', () => {audioPlaying = false;});
+                        }
+
+                        break;
+                      case 'R2':
+                        if (!audioPlaying){
+                          audioPlaying = true;
+                          this.nativeAudio.play('backwards', () => {audioPlaying = false;});
+                        }
+
+                        break;
+                      case 'S3':
+                        if (!audioPlaying){
+                          audioPlaying = true;
+                          this.nativeAudio.play('right', () => {audioPlaying = false;});
+                        }
+
+                        break;
+                      case 'R3':
+                        if (!audioPlaying){
+                          audioPlaying = true;
+                          this.nativeAudio.play('left', () => {audioPlaying = false;});
+                        }
+
+                        break;
+                    }
                   }
                 },
                 rej => {
