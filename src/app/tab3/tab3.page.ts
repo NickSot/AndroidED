@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
+import { NativeAudio } from '@ionic-native/native-audio/ngx';
 import { interval } from 'rxjs';
 
 @Component({
@@ -10,7 +11,7 @@ import { interval } from 'rxjs';
 export class Tab3Page implements OnInit{
   debugText: string = '';
   private queue: Array<string> = [];
-
+  //front: 2, back: 1, side: 3
   constructor(private bluetoothSerial: BluetoothSerial) {
 
   }
@@ -36,6 +37,27 @@ export class Tab3Page implements OnInit{
                     let winner = this.onDataRead(this.queue);
                     this.queue = [];
                     this.debugText = winner;
+
+                    // switch (winner){
+                    //   case 'S1':
+                    //     this.nativeAudio.play('../../assets/audio/Backwards.m4a');
+                    //     break;
+                    //   case 'R1':
+                    //     this.nativeAudio.play('../../assets/audio/Backwards.m4a');
+                    //     break;
+                    //   case 'S2':
+                    //     this.nativeAudio.play('../../assets/audio/Right.m4a');
+                    //     break;
+                    //   case 'R2':
+                    //     this.nativeAudio.play('../../assets/audio/Left.m4a');
+                    //     break;
+                    //   case 'S3':
+                    //     this.nativeAudio.play('../../assets/audio/Forward.m4a');
+                    //     break;
+                    //   case 'R3':
+                    //     this.nativeAudio.play('../../assets/audio/Forward.m4a');
+                    //     break;
+                    // }
                   }
                 },
                 rej => {
