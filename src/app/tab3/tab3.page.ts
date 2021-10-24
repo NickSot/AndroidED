@@ -23,17 +23,17 @@ export class Tab3Page implements OnInit{
         this.nativeAudio.preloadComplex('forward', 'assets/audio/Forward.m4a', 1, 1, 0).then(() => {
           this.nativeAudio.preloadComplex('backwards', 'assets/audio/Backwards.m4a', 1, 1, 0).then(() => {
             this.debugText = "all files preloaded...";
-          });
-        });
-      });
-    });
+          }, err => {this.debugText = err});
+        }, err => {this.debugText = err});
+      }, err => {this.debugText = err});
+    }, err => {this.debugText = err + '1'});
 
     let audioPlaying = false;
 
     let int = interval(100).subscribe((d) => {
       // if (!audioPlaying){
       //   audioPlaying = true;
-      //   this.nativeAudio.play('forward', () => {audioPlaying = false;});
+      //   this.nativeAudio.play('left', () => {audioPlaying = false;});
       // }
 
       this.bluetoothSerial.available().then(res => {
@@ -47,8 +47,7 @@ export class Tab3Page implements OnInit{
                       }
                     }
                   }
-                  if (d % 4 == 0){
-                    // int.unsubscribe();
+                  if (d % 4 == 0) {
                     //this call retrieves the element of that data that occurs the most.
                     let winner = this.onDataRead(this.queue);
                     this.queue = [];
