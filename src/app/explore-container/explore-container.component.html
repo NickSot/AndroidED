@@ -1,5 +1,10 @@
 <div id="container">
+  <div style="position: relative; top: 20%; left: 10%;">
+    <img src="assets/images/logo.png" alt="">
+  </div>
+
   <strong id="title">{{ name }}</strong>
+
   <div *ngIf="tab === 'tab2'" id="heightInputFormContainer">
     <form action="#" id="heightInputForm">
       <input type="text" id="userHeight" name="height" [(ngModel)]='height' style="border-radius: 8px; border-color: red; color: black; height: 50px; font-size: 14pt;">
